@@ -85,7 +85,7 @@ Random.seed!(1234)
     @test peps.size == (2,2)
 end
 
-
+#=
 @testset "factor graph 3 x 3" begin
     #this is full graph
     M = ones(9,9)
@@ -129,7 +129,7 @@ end
     peps = PepsNetwork(2,2, fg, β, :NW)
     @test peps.size == (2,2)
 end
-
+=#
 
 
 @testset "PEPS - axiliary functions" begin
