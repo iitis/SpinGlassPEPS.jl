@@ -539,7 +539,64 @@ end
     @test objective ≈ [p1, p2]
 end
 
+@testset "test make_lower_mps using factor graph" begin
+    m = 3
+    n = 3
+    t = 1
+    mpo = MPO([ones(2,2,2,2), ones(2,2,2,2)])
+    mps = set_spin_from_letf(mpo, 1)
+    @test mps[1] == ones(2,2,2)
+    @test mps[2] == 2*ones(2,2,2)
 
+    β = 3.
+    g = M2graph(Mq, -1)
+    gg = graph4peps(g, (1,1))
+    #=
+    β = 1
+
+    L = m * n * t
+
+    instance = "$(@__DIR__)/instances/pathological/test_$(m)_$(n)_$(t).txt"
+
+    ig = ising_graph(instance, L)
+    update_cells!(
+    ig,
+    rule = square_lattice((m, n, t)),
+    )
+
+    fg1 = factor_graph(
+        ig,
+        energy=energy,
+        spectrum=full_spectrum,
+    )
+=#
+    fg = factor_graph(
+        g,
+        energy=energy,
+        spectrum=full_spectrum,
+    )
+
+    origin = :NW
+
+    peps = PepsNetwork(3, 3, fg, β, origin)
+    mpo2 = MPO(PEPSRow(peps, 2))
+    mpo3 = MPO(PEPSRow(peps, 3))
+
+    M = form_peps(gg, β)
+
+    #TODO make something with dimensionality
+    cc = contract3x3by_ncon(M)
+    su = sum(cc)
+
+
+    # first row
+    A =  M[1,:]
+
+    # the row for lower_mps
+    row = 1
+    lower_mps = make_lower_mps2(gg, row+1, β, 0, 0.)
+end
+#=
 @testset "test an exemple instance" begin
     δH = 1e-6
     β = 3.
@@ -641,3 +698,4 @@ end
         @test spins[i] == spins_l[i]
     end
 end
+=#

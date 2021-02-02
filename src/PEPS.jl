@@ -1,5 +1,6 @@
 export NetworkGraph, PepsNetwork
 export generate_tensor, MPO
+export make_lower_mps2
 
 mutable struct NetworkGraph
     factor_graph::MetaDiGraph
@@ -138,3 +139,22 @@ function MPO(::Type{T}, peps::PepsNetwork, i::Int, k::Int) where {T <: Number}
     ψ
 end
 MPO(peps::PepsNetwork, i::Int, k::Int) = MPO(Float64, peps, i, k)
+
+function make_lower_mps2(g::MetaGraph, k::Int, β::T, χ::Int, threshold::Float64) where T <: Real
+    grid = props(g)[:grid]
+    s = size(grid,1)
+    #d = _max_cell_num(g)
+    #println("g ", g)
+    #control = MPSControl(D, var_ϵ, sweeps, β, dβ) 
+    #mps = MPS(g, control)
+    mps = MPS([ones(T, (1,1,1)) for _ ∈ 1:size(grid,2)])
+
+    for i ∈ s:-1:k
+        mpo = [compute_single_tensor(g, j, β; sum_over_last = true) for j ∈ grid[i,:]]
+        mps = MPO(mpo)*mps
+        if (threshold > 0.) & (χ < size(mps[1], 3))
+            mps = compress(mps, χ, threshold)
+        end
+    end
+    return mps
+end
