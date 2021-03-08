@@ -51,6 +51,8 @@ using CSV
         # solve the problem using B & B
         sol = low_energy_spectrum(peps, num_states)
 
+        @test sol.energies ≈ exact_energies
+
         println(sol.energies)
         println(sol.states)
         println(sol.largest_discarded_probability)
@@ -59,5 +61,4 @@ using CSV
             @test sol.energies ≈ exact_energies
         end
     end
-
 end
