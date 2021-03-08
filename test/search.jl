@@ -19,10 +19,10 @@ using CSV
         -15.6, -15.6, -15.4, -15.4
     ]
     exact_states = [ 
-        [-1, 0, 0, 1, 1, -1, -1, -1, 1, 0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, -1, 1, -1, 1, 0, 0, 0],
-        [-1, 0, 0, 1, 1, -1, -1, -1, 1, 0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, -1, 1, -1, -1, 0, 0, 0],
-        [-1, 0, 0, 1, 1, -1, -1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, -1, 1, -1, 1, 0, 0, 0],
-        [-1, 0, 0, 1, 1, -1, -1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, -1, 1, -1, -1, 0, 0, 0],
+        [-1, NaN, NaN, 1, 1, -1, -1, -1, 1, NaN, NaN, NaN, 1, NaN, NaN, 1, NaN, -1, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 1, 1, -1, 1, -1, 1, NaN, NaN, NaN],
+        [-1, NaN, NaN, 1, 1, -1, -1, -1, 1, NaN, NaN, NaN, 1, NaN, NaN, 1, NaN, -1, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 1, 1, -1, 1, -1, -1, NaN, NaN, NaN],
+        [-1, NaN, NaN, 1, 1, -1, -1, 1, 1, NaN, NaN, NaN, 1, NaN, NaN, 1, NaN, -1, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 1, 1, -1, 1, -1, 1, NaN, NaN, NaN],
+        [-1, NaN, NaN, 1, 1, -1, -1, 1, 1, NaN, NaN, NaN, 1, NaN, NaN, 1, NaN, -1, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, NaN, 1, 1, -1, 1, -1, -1, NaN, NaN, NaN],
     ]
 
     control_params = Dict(
