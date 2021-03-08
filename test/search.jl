@@ -19,10 +19,10 @@ using CSV
         -15.6, -15.6, -15.4, -15.4
     ]
     exact_states = [ 
-        [0, 2, 2, 1, 1, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 1, 0, 1, 2, 2, 2],
-        [0, 2, 2, 1, 1, 0, 0, 0, 1, 2, 2, 2, 1, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 1, 0, 0, 2, 2, 2],
-        [0, 2, 2, 1, 1, 0, 0, 1, 1, 2, 2, 2, 1, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 1, 0, 1, 2, 2, 2],
-        [0, 2, 2, 1, 1, 0, 0, 1, 1, 2, 2, 2, 1, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 0, 1, 0, 0, 2, 2, 2],
+        [-1, 0, 0, 1, 1, -1, -1, -1, 1, 0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, -1, 1, -1, 1, 0, 0, 0],
+        [-1, 0, 0, 1, 1, -1, -1, -1, 1, 0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, -1, 1, -1, -1, 0, 0, 0],
+        [-1, 0, 0, 1, 1, -1, -1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, -1, 1, -1, 1, 0, 0, 0],
+        [-1, 0, 0, 1, 1, -1, -1, 1, 1, 0, 0, 0, 1, 0, 0, 1, 0, -1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, -1, 1, -1, -1, 0, 0, 0],
     ]
 
     control_params = Dict(
@@ -45,7 +45,7 @@ using CSV
         spectrum=full_spectrum,
     )
 
-   for origin ∈ (:NW, )# :SW, :WS, :WN, :NE, :EN, :SE, :ES)
+   for origin ∈ (:NW, )#(:NW, :SW, :WS, :WN, :NE, :EN, :SE, :ES)
         peps = PepsNetwork(m, n, fg, β, origin, control_params)
 
         # solve the problem using B & B
@@ -54,6 +54,10 @@ using CSV
         println(sol.energies)
         println(sol.states)
         println(sol.largest_discarded_probability)
+
+        @testset "has correct spectrum given the origin at $(origin)" begin 
+            @test sol.energies ≈ exact_energies
+        end
     end
 
 end
